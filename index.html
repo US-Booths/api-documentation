@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>US Booths API - Documentación Completa</title>
+    <title>US Booths API - Complete Documentation</title>
     <style>
         * {
             margin: 0;
@@ -12,26 +12,28 @@
         }
 
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
+            --primary-color: #4f8fff;
+            --secondary-color: #3b7ce0;
             --success-color: #10b981;
             --warning-color: #f59e0b;
             --danger-color: #ef4444;
-            --bg-color: #ffffff;
-            --bg-secondary: #f8fafc;
-            --text-color: #1e293b;
-            --text-secondary: #64748b;
-            --border-color: #e2e8f0;
-            --code-bg: #f1f5f9;
-            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --purple-color: #9333ea;
+            --bg-color: #0f1117;
+            --bg-secondary: #1a1d29;
+            --bg-tertiary: #232736;
+            --text-color: #e5e7eb;
+            --text-secondary: #9ca3af;
+            --border-color: #2d3142;
+            --code-bg: #1e293b;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             color: var(--text-color);
-            background: var(--bg-secondary);
+            background: var(--bg-color);
         }
 
         .header {
@@ -63,7 +65,7 @@
 
         .sidebar {
             width: 300px;
-            background: var(--bg-color);
+            background: var(--bg-secondary);
             padding: 2rem 1rem;
             box-shadow: var(--shadow);
             position: sticky;
@@ -80,12 +82,14 @@
             font-size: 0.95rem;
             margin-bottom: 1.5rem;
             transition: all 0.3s;
+            background: var(--bg-tertiary);
+            color: var(--text-color);
         }
 
         .search-box:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            box-shadow: 0 0 0 3px rgba(79, 143, 255, 0.2);
         }
 
         .nav-section {
@@ -113,7 +117,7 @@
         }
 
         .nav-link:hover {
-            background: var(--bg-secondary);
+            background: var(--bg-tertiary);
             color: var(--primary-color);
             transform: translateX(5px);
         }
@@ -121,7 +125,7 @@
         .main-content {
             flex: 1;
             padding: 2rem;
-            background: var(--bg-color);
+            background: var(--bg-secondary);
             margin: 2rem;
             border-radius: 12px;
             box-shadow: var(--shadow);
@@ -147,7 +151,7 @@
         }
 
         .info-box {
-            background: var(--bg-secondary);
+            background: var(--bg-tertiary);
             padding: 1.5rem;
             border-radius: 8px;
             margin: 1rem 0;
@@ -156,16 +160,16 @@
 
         .info-box.warning {
             border-left-color: var(--warning-color);
-            background: #fef3c7;
+            background: rgba(245, 158, 11, 0.1);
         }
 
         .info-box.success {
             border-left-color: var(--success-color);
-            background: #d1fae5;
+            background: rgba(16, 185, 129, 0.1);
         }
 
         .endpoint {
-            background: var(--bg-color);
+            background: var(--bg-tertiary);
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 1.5rem;
@@ -195,10 +199,10 @@
             letter-spacing: 0.5px;
         }
 
-        .method.get { background: #dbeafe; color: #1e40af; }
-        .method.post { background: #dcfce7; color: #15803d; }
-        .method.put { background: #fef3c7; color: #a16207; }
-        .method.delete { background: #fee2e2; color: #b91c1c; }
+        .method.get { background: #2563eb; color: white; }
+        .method.post { background: #10b981; color: white; }
+        .method.put { background: #f59e0b; color: white; }
+        .method.delete { background: #ef4444; color: white; }
 
         .path {
             font-family: 'Courier New', monospace;
@@ -227,18 +231,18 @@
         }
 
         .badge.auth {
-            background: #fed7aa;
-            color: #9a3412;
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-color);
         }
 
         .badge.public {
-            background: #d1fae5;
-            color: #065f46;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
         }
 
         .badge.rate {
-            background: #e0e7ff;
-            color: #3730a3;
+            background: rgba(79, 143, 255, 0.2);
+            color: var(--primary-color);
         }
 
         .description {
@@ -248,7 +252,7 @@
         }
 
         .code-block {
-            background: #1e293b;
+            background: var(--code-bg);
             color: #e2e8f0;
             padding: 1rem;
             border-radius: 8px;
@@ -256,6 +260,7 @@
             font-size: 0.9rem;
             overflow-x: auto;
             margin: 1rem 0;
+            border: 1px solid var(--border-color);
         }
 
         .stats-grid {
@@ -271,6 +276,7 @@
             padding: 1.5rem;
             border-radius: 8px;
             text-align: center;
+            box-shadow: var(--shadow-lg);
         }
 
         .stat-number {
@@ -301,53 +307,74 @@
         .hidden {
             display: none;
         }
+
+        ul {
+            margin-left: 1.5rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        code {
+            background: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--primary-color);
+        }
+
+        h4 {
+            color: var(--text-color);
+            margin: 1rem 0 0.5rem;
+        }
     </style>
 </head>
 <body>
     <header class="header">
         <h1>🏢 US Booths API</h1>
-        <p>Documentación Completa de la API REST - v1.0</p>
+        <p>Complete REST API Documentation - v1.0</p>
     </header>
 
     <div class="container">
         <aside class="sidebar">
-            <input type="text" class="search-box" placeholder="Buscar endpoint..." id="searchBox">
+            <input type="text" class="search-box" placeholder="Search endpoint..." id="searchBox">
 
             <div class="nav-section">
                 <h3>📋 General</h3>
-                <a href="#overview" class="nav-link">Resumen</a>
-                <a href="#authentication" class="nav-link">Autenticación</a>
+                <a href="#overview" class="nav-link">Overview</a>
+                <a href="#authentication" class="nav-link">Authentication</a>
                 <a href="#rate-limits" class="nav-link">Rate Limits</a>
             </div>
 
             <div class="nav-section">
-                <h3>🌐 Públicos</h3>
-                <a href="#public-endpoints" class="nav-link">Endpoints Públicos</a>
+                <h3>🌐 Public</h3>
+                <a href="#public-endpoints" class="nav-link">Public Endpoints</a>
             </div>
 
             <div class="nav-section">
                 <h3>🔐 Admin</h3>
                 <a href="#admin-dashboard" class="nav-link">Dashboard</a>
-                <a href="#admin-users" class="nav-link">Usuarios</a>
-                <a href="#admin-products" class="nav-link">Productos</a>
-                <a href="#admin-orders" class="nav-link">Órdenes</a>
-                <a href="#admin-work-orders" class="nav-link">Órdenes de Trabajo</a>
+                <a href="#admin-users" class="nav-link">Users</a>
+                <a href="#admin-products" class="nav-link">Products</a>
+                <a href="#admin-orders" class="nav-link">Orders</a>
+                <a href="#admin-work-orders" class="nav-link">Work Orders</a>
             </div>
 
             <div class="nav-section">
-                <h3>🛍️ Cliente</h3>
-                <a href="#client-endpoints" class="nav-link">Tienda & Cart</a>
+                <h3>🛍️ Client</h3>
+                <a href="#client-endpoints" class="nav-link">Store & Cart</a>
             </div>
 
             <div class="nav-section">
                 <h3>🔗 Webhooks</h3>
-                <a href="#webhooks" class="nav-link">Integraciones</a>
+                <a href="#webhooks" class="nav-link">Integrations</a>
             </div>
         </aside>
 
         <main class="main-content">
             <section class="section" id="overview">
-                <h2>📋 Resumen General</h2>
+                <h2>📋 General Overview</h2>
 
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -356,55 +383,55 @@
                     </div>
                     <div class="stat-card">
                         <div class="stat-number">REST</div>
-                        <div class="stat-label">Arquitectura</div>
+                        <div class="stat-label">Architecture</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number">JSON</div>
-                        <div class="stat-label">Formato</div>
+                        <div class="stat-label">Format</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number">v1</div>
-                        <div class="stat-label">Versión</div>
+                        <div class="stat-label">Version</div>
                     </div>
                 </div>
 
                 <div class="info-box success">
                     <h3>🔗 Base URL</h3>
                     <p><strong>API Base:</strong> <code>https://api.usbooths.com</code></p>
-                    <p><strong>Versión:</strong> <code>/api/v1/...</code></p>
+                    <p><strong>Version:</strong> <code>/api/v1/...</code></p>
                 </div>
 
-                <h3>Características Principales</h3>
+                <h3>Key Features</h3>
                 <ul style="line-height: 2;">
-                    <li>✅ Autenticación Laravel Sanctum (token-based)</li>
-                    <li>✅ Rate limiting por tipo de endpoint</li>
-                    <li>✅ Versionado de API</li>
-                    <li>✅ Webhooks para integraciones</li>
-                    <li>✅ Sistema de permisos por roles</li>
-                    <li>✅ Integración QuickBooks, Twilio, GoHighLevel</li>
-                    <li>✅ Chat en tiempo real</li>
-                    <li>✅ Gestión completa de producción</li>
+                    <li>✅ Laravel Sanctum Authentication (token-based)</li>
+                    <li>✅ Rate limiting by endpoint type</li>
+                    <li>✅ API Versioning</li>
+                    <li>✅ Webhooks for integrations</li>
+                    <li>✅ Role-based permissions system</li>
+                    <li>✅ QuickBooks, Twilio, GoHighLevel Integration</li>
+                    <li>✅ Real-time chat</li>
+                    <li>✅ Complete production management</li>
                 </ul>
             </section>
 
             <section class="section" id="authentication">
-                <h2>🔐 Autenticación</h2>
+                <h2>🔐 Authentication</h2>
 
-                <p>La API utiliza <strong>Laravel Sanctum</strong> para autenticación basada en tokens.</p>
+                <p>The API uses <strong>Laravel Sanctum</strong> for token-based authentication.</p>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
                         <span class="method post">POST</span>
                         <span class="path">/api/login</span>
-                        <span class="badge public">Público</span>
+                        <span class="badge public">Public</span>
                     </div>
-                    <div class="description">Obtener token de autenticación</div>
+                    <div class="description">Get authentication token</div>
 
                     <h4>Request:</h4>
                     <div class="code-block">
 {
-  "email": "usuario@example.com",
-  "password": "tu_password"
+  "email": "user@example.com",
+  "password": "your_password"
 }
                     </div>
 
@@ -415,14 +442,14 @@
   "token": "1|abcdef123456...",
   "user": {
     "id": 1,
-    "name": "Usuario",
-    "email": "usuario@example.com"
+    "name": "User",
+    "email": "user@example.com"
   }
 }
                     </div>
                 </div>
 
-                <h3>Usar el Token</h3>
+                <h3>Using the Token</h3>
                 <div class="code-block">
 Authorization: Bearer 1|abcdef123456...
                 </div>
@@ -433,52 +460,52 @@ Authorization: Bearer 1|abcdef123456...
 
                 <div class="info-box">
                     <ul>
-                        <li><strong>Público:</strong> 60 req/min por IP</li>
-                        <li><strong>Auth:</strong> 10 req/min por IP (login/register)</li>
-                        <li><strong>Admin:</strong> 600 req/min por usuario</li>
-                        <li><strong>Cliente:</strong> 120 req/min por IP</li>
-                        <li><strong>Webhooks:</strong> 120 req/min por IP</li>
+                        <li><strong>Public:</strong> 60 req/min per IP</li>
+                        <li><strong>Auth:</strong> 10 req/min per IP (login/register)</li>
+                        <li><strong>Admin:</strong> 600 req/min per user</li>
+                        <li><strong>Client:</strong> 120 req/min per IP</li>
+                        <li><strong>Webhooks:</strong> 120 req/min per IP</li>
                     </ul>
                 </div>
             </section>
 
             <section class="section" id="public-endpoints">
-                <h2>🌐 Endpoints Públicos</h2>
+                <h2>🌐 Public Endpoints</h2>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
                         <span class="method get">GET</span>
                         <span class="path">/api/health</span>
-                        <span class="badge public">Público</span>
+                        <span class="badge public">Public</span>
                     </div>
-                    <div class="description">Health check de la API</div>
+                    <div class="description">API health check</div>
                 </div>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
                         <span class="method post">POST</span>
                         <span class="path">/api/register</span>
-                        <span class="badge public">Público</span>
+                        <span class="badge public">Public</span>
                     </div>
-                    <div class="description">Registrar nuevo usuario</div>
+                    <div class="description">Register new user</div>
                 </div>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
                         <span class="method post">POST</span>
                         <span class="path">/api/forgot-password</span>
-                        <span class="badge public">Público</span>
+                        <span class="badge public">Public</span>
                     </div>
-                    <div class="description">Solicitar recuperación de contraseña</div>
+                    <div class="description">Request password recovery</div>
                 </div>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
                         <span class="method post">POST</span>
                         <span class="path">/api/reset-password</span>
-                        <span class="badge public">Público</span>
+                        <span class="badge public">Public</span>
                     </div>
-                    <div class="description">Restablecer contraseña</div>
+                    <div class="description">Reset password</div>
                 </div>
             </section>
 
@@ -486,7 +513,7 @@ Authorization: Bearer 1|abcdef123456...
                 <h2>🔐 Admin - Dashboard</h2>
 
                 <div class="info-box warning">
-                    <p><strong>Nota:</strong> Todos los endpoints admin requieren <code>auth:sanctum</code> y tienen rate limit de 600 req/min.</p>
+                    <p><strong>Note:</strong> All admin endpoints require <code>auth:sanctum</code> and have a rate limit of 600 req/min.</p>
                 </div>
 
                 <div class="endpoint">
@@ -495,12 +522,12 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/dashboard</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Datos del dashboard (métricas, estadísticas)</div>
+                    <div class="description">Dashboard data (metrics, statistics)</div>
                 </div>
             </section>
 
             <section class="section" id="admin-users">
-                <h2>👥 Admin - Usuarios</h2>
+                <h2>👥 Admin - Users</h2>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
@@ -508,7 +535,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/admins</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Listar administradores</div>
+                    <div class="description">List administrators</div>
                 </div>
 
                 <div class="endpoint">
@@ -517,7 +544,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/admin</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Crear administrador</div>
+                    <div class="description">Create administrator</div>
                 </div>
 
                 <div class="endpoint">
@@ -526,7 +553,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/contacts</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Listar contactos/clientes</div>
+                    <div class="description">List contacts/clients</div>
                 </div>
 
                 <div class="endpoint">
@@ -535,12 +562,12 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/client</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Crear contacto/cliente</div>
+                    <div class="description">Create contact/client</div>
                 </div>
             </section>
 
             <section class="section" id="admin-products">
-                <h2>📦 Admin - Productos</h2>
+                <h2>📦 Admin - Products</h2>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
@@ -548,7 +575,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/store-products</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Listar productos de tienda</div>
+                    <div class="description">List store products</div>
                 </div>
 
                 <div class="endpoint">
@@ -557,7 +584,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/store-product</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Crear producto</div>
+                    <div class="description">Create product</div>
                 </div>
 
                 <div class="endpoint">
@@ -566,7 +593,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/custom-products</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Productos personalizados</div>
+                    <div class="description">Custom products</div>
                 </div>
 
                 <div class="endpoint">
@@ -575,12 +602,12 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/standard-products</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Productos estándar</div>
+                    <div class="description">Standard products</div>
                 </div>
             </section>
 
             <section class="section" id="admin-orders">
-                <h2>📝 Admin - Órdenes</h2>
+                <h2>📝 Admin - Orders</h2>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
@@ -588,7 +615,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/orders</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Listar todas las órdenes</div>
+                    <div class="description">List all orders</div>
                 </div>
 
                 <div class="endpoint">
@@ -597,7 +624,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/order/{id}</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Ver orden por ID</div>
+                    <div class="description">View order by ID</div>
                 </div>
 
                 <div class="endpoint">
@@ -606,7 +633,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/process-order</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Procesar nueva orden</div>
+                    <div class="description">Process new order</div>
                 </div>
 
                 <div class="endpoint">
@@ -615,7 +642,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/send-quote</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Enviar cotización</div>
+                    <div class="description">Send quote</div>
                 </div>
 
                 <div class="endpoint">
@@ -624,12 +651,12 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/send-invoice</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Enviar factura</div>
+                    <div class="description">Send invoice</div>
                 </div>
             </section>
 
             <section class="section" id="admin-work-orders">
-                <h2>🏭 Admin - Órdenes de Trabajo</h2>
+                <h2>🏭 Admin - Work Orders</h2>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
@@ -637,7 +664,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/work-orders</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Listar órdenes de trabajo</div>
+                    <div class="description">List work orders</div>
                 </div>
 
                 <div class="endpoint">
@@ -646,7 +673,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/work-order</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Crear orden de trabajo</div>
+                    <div class="description">Create work order</div>
                 </div>
 
                 <div class="endpoint">
@@ -655,7 +682,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/take-work-order</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Tomar orden de trabajo</div>
+                    <div class="description">Take work order</div>
                 </div>
 
                 <div class="endpoint">
@@ -664,56 +691,56 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/admin/update-status-work-order</span>
                         <span class="badge auth">Auth Required</span>
                     </div>
-                    <div class="description">Actualizar estado de orden</div>
+                    <div class="description">Update order status</div>
                 </div>
             </section>
 
             <section class="section" id="client-endpoints">
-                <h2>🛍️ Cliente - Tienda & Carrito</h2>
+                <h2>🛍️ Client - Store & Cart</h2>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
                         <span class="method get">GET</span>
                         <span class="path">/api/client/home</span>
-                        <span class="badge public">Público</span>
+                        <span class="badge public">Public</span>
                     </div>
-                    <div class="description">Datos del home (slider, productos destacados)</div>
+                    <div class="description">Home data (slider, featured products)</div>
                 </div>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
                         <span class="method get">GET</span>
                         <span class="path">/api/client/shop</span>
-                        <span class="badge public">Público</span>
+                        <span class="badge public">Public</span>
                     </div>
-                    <div class="description">Productos de la tienda</div>
+                    <div class="description">Store products</div>
                 </div>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
                         <span class="method get">GET</span>
                         <span class="path">/api/client/cart/{cartId}</span>
-                        <span class="badge public">Público</span>
+                        <span class="badge public">Public</span>
                     </div>
-                    <div class="description">Ver carrito</div>
+                    <div class="description">View cart</div>
                 </div>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
                         <span class="method post">POST</span>
                         <span class="path">/api/client/cart/add</span>
-                        <span class="badge public">Público</span>
+                        <span class="badge public">Public</span>
                     </div>
-                    <div class="description">Agregar al carrito</div>
+                    <div class="description">Add to cart</div>
                 </div>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
                         <span class="method post">POST</span>
                         <span class="path">/api/client/quote</span>
-                        <span class="badge public">Público</span>
+                        <span class="badge public">Public</span>
                     </div>
-                    <div class="description">Solicitar cotización</div>
+                    <div class="description">Request quote</div>
                 </div>
             </section>
 
@@ -721,7 +748,7 @@ Authorization: Bearer 1|abcdef123456...
                 <h2>🔗 Webhooks</h2>
 
                 <div class="info-box">
-                    <p>Webhooks para integraciones con servicios externos</p>
+                    <p>Webhooks for external service integrations</p>
                 </div>
 
                 <div class="endpoint">
@@ -730,7 +757,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/webhooks/quickbooks/payments</span>
                         <span class="badge public">Webhook</span>
                     </div>
-                    <div class="description">QuickBooks - Notificación de pagos</div>
+                    <div class="description">QuickBooks - Payment notification</div>
                 </div>
 
                 <div class="endpoint">
@@ -739,7 +766,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/twilio/get-message-received</span>
                         <span class="badge public">Webhook</span>
                     </div>
-                    <div class="description">Twilio - Mensajes recibidos</div>
+                    <div class="description">Twilio - Messages received</div>
                 </div>
 
                 <div class="endpoint">
@@ -748,27 +775,27 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/ghl/webhook</span>
                         <span class="badge public">Webhook</span>
                     </div>
-                    <div class="description">GoHighLevel - Webhook general</div>
+                    <div class="description">GoHighLevel - General webhook</div>
                 </div>
             </section>
 
             <section class="section">
-                <h2>📚 Contacto</h2>
+                <h2>📚 Contact</h2>
 
                 <div class="info-box success">
-                    <h3>Soporte Técnico</h3>
+                    <h3>Technical Support</h3>
                     <p>📧 <strong>mayo@usbooths.com</strong></p>
                     <p>🌐 <strong>https://usbooths.com</strong></p>
-                    <p>💼 <strong>Ambiente: Producción</strong></p>
+                    <p>💼 <strong>Environment: Production</strong></p>
                 </div>
 
                 <div class="info-box warning">
-                    <h3>⚠️ Notas Importantes</h3>
+                    <h3>⚠️ Important Notes</h3>
                     <ul>
-                        <li>API en producción con datos reales</li>
-                        <li>Mantén tus tokens seguros</li>
-                        <li>Respeta los rate limits</li>
-                        <li>Documentación generada automáticamente</li>
+                        <li>Production API with real data</li>
+                        <li>Keep your tokens secure</li>
+                        <li>Respect rate limits</li>
+                        <li>Auto-generated documentation</li>
                     </ul>
                 </div>
             </section>
@@ -802,7 +829,7 @@ Authorization: Bearer 1|abcdef123456...
                 navigator.clipboard.writeText(text).then(() => {
                     const originalText = path.textContent;
                     path.style.color = 'white';
-                    path.textContent = '✓ Copiado!';
+                    path.textContent = '✓ Copied!';
                     setTimeout(() => {
                         path.textContent = originalText;
                         path.style.color = '';
