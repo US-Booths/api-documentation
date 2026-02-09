@@ -102,6 +102,8 @@
             position: sticky;
             top: 100px;
             height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
             padding-right: 24px;
         }
 
@@ -266,7 +268,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             flex-wrap: wrap;
         }
 
@@ -289,7 +291,7 @@
             color: var(--success);
         }
 
-        .method.put {
+        .method.put, .method.patch {
             background: rgba(255, 149, 0, 0.15);
             color: var(--warning);
         }
@@ -311,6 +313,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             word-break: break-all;
+            user-select: all;
         }
 
         .path:hover {
@@ -334,6 +337,11 @@
         .badge.public {
             background: rgba(52, 199, 89, 0.15);
             color: var(--success);
+        }
+
+        .badge.webhook {
+            background: rgba(175, 82, 222, 0.15);
+            color: var(--purple);
         }
 
         .description {
@@ -418,6 +426,34 @@
             font-size: 13px;
             color: var(--text-tertiary);
             font-style: italic;
+            margin-top: 8px;
+        }
+
+        .copy-btn {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 4px 8px;
+            background: var(--bg-tertiary);
+            border: 0.5px solid var(--separator);
+            border-radius: 4px;
+            color: var(--text-secondary);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+        }
+
+        .copy-btn.copied {
+            color: var(--success);
+        }
+
+        .endpoint-count {
+            font-size: 12px;
+            color: var(--text-tertiary);
             margin-top: 8px;
         }
 
@@ -541,29 +577,37 @@
             </div>
 
             <div class="nav-section">
-                <h3>Public</h3>
+                <h3>Public API</h3>
                 <a href="#public-endpoints" class="nav-link">Public Endpoints</a>
             </div>
 
             <div class="nav-section">
-                <h3>Admin</h3>
-                <a href="#admin-dashboard" class="nav-link">Dashboard</a>
+                <h3>Client/Store</h3>
+                <a href="#client-home" class="nav-link">Home & Gallery</a>
+                <a href="#client-shop" class="nav-link">Shop & Cart</a>
+                <a href="#client-orders" class="nav-link">Orders & Quotes</a>
+                <a href="#client-content" class="nav-link">Content & CMS</a>
+            </div>
+
+            <div class="nav-section">
+                <h3>Admin Portal</h3>
+                <a href="#admin-core" class="nav-link">Core & Dashboard</a>
                 <a href="#admin-users" class="nav-link">Users & Contacts</a>
-                <a href="#admin-products" class="nav-link">Products</a>
-                <a href="#admin-orders" class="nav-link">Orders</a>
-                <a href="#admin-work-orders" class="nav-link">Work Orders</a>
-                <a href="#admin-inventory" class="nav-link">Inventory</a>
+                <a href="#admin-products" class="nav-link">Products & Catalog</a>
+                <a href="#admin-orders" class="nav-link">Orders & Invoices</a>
+                <a href="#admin-work-orders" class="nav-link">Work Orders & Production</a>
+                <a href="#admin-inventory" class="nav-link">Inventory & Materials</a>
+                <a href="#admin-communication" class="nav-link">Chat & Notifications</a>
+                <a href="#admin-files" class="nav-link">Files & Media</a>
+                <a href="#admin-calendar" class="nav-link">Calendar & Tasks</a>
+                <a href="#admin-integrations" class="nav-link">Integrations</a>
+                <a href="#admin-cms" class="nav-link">CMS & Content</a>
                 <a href="#admin-other" class="nav-link">Other Resources</a>
             </div>
 
             <div class="nav-section">
-                <h3>Client</h3>
-                <a href="#client-endpoints" class="nav-link">Store & Cart</a>
-            </div>
-
-            <div class="nav-section">
                 <h3>Webhooks</h3>
-                <a href="#webhooks" class="nav-link">Integrations</a>
+                <a href="#webhooks" class="nav-link">External Integrations</a>
             </div>
         </aside>
 
@@ -573,8 +617,8 @@
 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-number">350+</div>
-                        <div class="stat-label">Endpoints</div>
+                        <div class="stat-number">461</div>
+                        <div class="stat-label">Total Endpoints</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number">REST</div>
@@ -586,7 +630,7 @@
                     </div>
                     <div class="stat-card">
                         <div class="stat-number">v1</div>
-                        <div class="stat-label">Version</div>
+                        <div class="stat-label">Current Version</div>
                     </div>
                 </div>
 
@@ -596,26 +640,35 @@
                     <p><strong>Version:</strong> <code>/api/v1/...</code></p>
                 </div>
 
+                <h3>API Statistics</h3>
+                <ul>
+                    <li><strong>Public Endpoints:</strong> 15 endpoints (no authentication required)</li>
+                    <li><strong>Client/Store Endpoints:</strong> 39 endpoints (public store, mixed auth)</li>
+                    <li><strong>Admin Endpoints:</strong> 403 endpoints (authentication required)</li>
+                    <li><strong>Webhook Endpoints:</strong> 4 endpoints (external integrations)</li>
+                </ul>
+
                 <h3>Key Features</h3>
                 <ul>
                     <li>Laravel Sanctum Authentication (token-based)</li>
-                    <li>Rate limiting by endpoint type</li>
-                    <li>API Versioning</li>
-                    <li>Webhooks for integrations</li>
+                    <li>Comprehensive rate limiting by endpoint type</li>
+                    <li>API Versioning support</li>
+                    <li>Webhook integrations (QuickBooks, Twilio, GoHighLevel)</li>
                     <li>Role-based permissions system</li>
-                    <li>QuickBooks, Twilio, GoHighLevel Integration</li>
-                    <li>Real-time chat and notifications</li>
-                    <li>Complete production management</li>
-                    <li>Inventory tracking and management</li>
+                    <li>Real-time chat and push notifications</li>
+                    <li>Complete production and work order management</li>
+                    <li>Multi-type inventory tracking (Fix, Dynamic, Foam)</li>
+                    <li>QuickBooks, Twilio, and GoHighLevel integration</li>
+                    <li>Comprehensive order and invoice management</li>
+                    <li>CMS capabilities for storefront content</li>
                 </ul>
 
-                <p class="note">Note: This documentation covers the main API endpoints. For internal or advanced endpoints, please contact technical support.</p>
+                <p class="note">Note: This is auto-generated documentation from Laravel route files. All 461 endpoints are documented below.</p>
             </section>
-
             <section class="section" id="authentication">
                 <h2>Authentication</h2>
 
-                <p>The API uses <strong>Laravel Sanctum</strong> for token-based authentication.</p>
+                <p>The API uses <strong>Laravel Sanctum</strong> for token-based authentication. Tokens are required for all admin endpoints and some client endpoints.</p>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
@@ -623,9 +676,9 @@
                         <span class="path">/api/login</span>
                         <span class="badge public">Public</span>
                     </div>
-                    <div class="description">Get authentication token</div>
+                    <div class="description">Authenticate user and receive access token</div>
 
-                    <h4>Request</h4>
+                    <h4>Request Body</h4>
                     <div class="code-block">{
   "email": "user@example.com",
   "password": "your_password"
@@ -637,427 +690,3417 @@
   "token": "1|abcdef123456...",
   "user": {
     "id": 1,
-    "name": "User",
-    "email": "user@example.com"
+    "name": "User Name",
+    "email": "user@example.com",
+    "role": "admin"
   }
 }</div>
                 </div>
 
-                <h3>Using the Token</h3>
+                <h3>Using Authentication Tokens</h3>
+                <p>Include the token in the <code>Authorization</code> header for all authenticated requests:</p>
                 <div class="code-block">Authorization: Bearer 1|abcdef123456...</div>
-            </section>
 
+                <h3>Token Management</h3>
+                <ul>
+                    <li><strong>Logout:</strong> POST <code>/api/logout</code> (revokes current token)</li>
+                    <li><strong>Get User:</strong> GET <code>/api/user</code> (returns authenticated user info)</li>
+                    <li><strong>Password Reset:</strong> POST <code>/api/forgot-password</code> and <code>/api/reset-password</code></li>
+                </ul>
+            </section>
             <section class="section" id="rate-limits">
                 <h2>Rate Limits</h2>
 
+                <p>Rate limits are enforced to ensure API stability and fair usage across all clients.</p>
+
                 <div class="info-box">
+                    <h3>Limit Types</h3>
                     <ul>
-                        <li><strong>Public:</strong> 60 req/min per IP</li>
-                        <li><strong>Auth:</strong> 10 req/min per IP (login/register)</li>
-                        <li><strong>Admin:</strong> 600 req/min per user</li>
-                        <li><strong>Client:</strong> 120 req/min per IP</li>
-                        <li><strong>Webhooks:</strong> 120 req/min per IP</li>
+                        <li><strong>Public Endpoints:</strong> 60 requests/minute per IP address</li>
+                        <li><strong>Auth Endpoints:</strong> 10 requests/minute per IP (login/register only)</li>
+                        <li><strong>Admin Endpoints:</strong> 600 requests/minute per authenticated user</li>
+                        <li><strong>Client/Store Endpoints:</strong> 120 requests/minute per IP</li>
+                        <li><strong>Webhook Endpoints:</strong> 120 requests/minute per IP</li>
                     </ul>
                 </div>
-            </section>
 
-            <section class="section" id="public-endpoints">
-                <h2>Public Endpoints</h2>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/health</span>
-                        <span class="badge public">Public</span>
-                    </div>
-                    <div class="description">API health check</div>
-                </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/register</span>
-                        <span class="badge public">Public</span>
-                    </div>
-                    <div class="description">Register new user</div>
-                </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/forgot-password</span>
-                        <span class="badge public">Public</span>
-                    </div>
-                    <div class="description">Request password recovery</div>
-                </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/reset-password</span>
-                        <span class="badge public">Public</span>
-                    </div>
-                    <div class="description">Reset password</div>
-                </div>
-            </section>
-
-            <section class="section" id="admin-dashboard">
-                <h2>Admin — Dashboard</h2>
+                <h3>Rate Limit Headers</h3>
+                <p>All API responses include rate limit information in headers:</p>
+                <ul>
+                    <li><code>X-RateLimit-Limit</code> — Maximum requests allowed</li>
+                    <li><code>X-RateLimit-Remaining</code> — Requests remaining in current window</li>
+                    <li><code>Retry-After</code> — Seconds until limit resets (when exceeded)</li>
+                </ul>
 
                 <div class="info-box warning">
-                    <p><strong>Note:</strong> All admin endpoints require <code>auth:sanctum</code> and have a rate limit of 600 req/min.</p>
+                    <h3>Exceeded Rate Limits</h3>
+                    <p>When rate limits are exceeded, the API returns <strong>HTTP 429 Too Many Requests</strong>. Wait for the time specified in <code>Retry-After</code> header before making additional requests.</p>
                 </div>
+            </section>
 
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/admin/dashboard</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Dashboard data (metrics, statistics)</div>
+                        <section class="section" id="public-endpoints">
+                <h2>Public Endpoints</h2>
+                <div class="endpoint-count">10 endpoints</div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/approve-pool-order</span>
+                    <span class="badge public">Public</span>
                 </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/cancel-reset-password</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/forgot-password</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/health</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/login</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/register</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/reset-password</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/sms-call/save-received-sms</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/sms-call/save-sent-sms</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/workstations/activeToLogin</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+
+            </section>
+
+            <section class="section" id="public-admin">
+                <h2>Public Admin Routes</h2>
+                <div class="endpoint-count">5 endpoints</div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/admin/header-data</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/admin/person/media/{personId}</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/admin/quickbooks/connect</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/admin/quickbooks/connect</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/admin/work-order/files/{workOrderId}</span>
+                    <span class="badge public">Public</span>
+                </div>
+            </div>
+
+            </section>
+
+            <section class="section" id="client-home">
+                <h2>Home & Gallery</h2>
+                <div class="endpoint-count">3 endpoints</div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/gallery</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/gallery/images/{image}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/home</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+
+            </section>
+
+            <section class="section" id="client-shop">
+                <h2>Shop & Cart</h2>
+                <div class="endpoint-count">9 endpoints</div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/cart/add</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/cart/clear</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/cart/decrease-quantity</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/cart/increase-quantity</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/cart/remove/{cartId}/item/{itemId}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/cart/{cartId}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/shop</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/shop/product/images/image/{image}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/shop/product/{name}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+
+            </section>
+
+            <section class="section" id="client-orders">
+                <h2>Orders, Quotes & Proposals</h2>
+                <div class="endpoint-count">19 endpoints</div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/client/exchange-fb-token/{shortToken}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/client/facebook/save-page-token</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/client/refresh-fb-token/{facebookId}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/confirm-advances</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/confirm-proposal</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/confirm-quote/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/contact-name</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/contact-susbscription</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/facebook/webhook</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/facebook/webhook</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/footer-worstations</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/invoice-pay-token</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/invoice-token</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/manager-contact/{lastname}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/order-token</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/process-order/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/quote</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/register-back-contact</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/save-contact</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+
+            </section>
+
+            <section class="section" id="client-content">
+                <h2>Content & CMS</h2>
+                <div class="endpoint-count">8 endpoints</div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/about-us</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/blogs</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/blogs/{id}/image</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/blogs/{title}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/faqs</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/legal-terms</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/portfolio</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/portfolio/work/{title}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+
+            </section>
+
+            <section class="section" id="admin-core">
+                <h2>Core & Dashboard</h2>
+                <div class="endpoint-count">1 endpoint</div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/dashboard</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+
             </section>
 
             <section class="section" id="admin-users">
-                <h2>Admin — Users & Contacts</h2>
+                <h2>Users & Contacts</h2>
+                <div class="endpoint-count">40 endpoints</div>
 
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/admin/admins</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">List administrators</div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/admin</span>
+                    <span class="badge auth">Auth</span>
                 </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/admin/email-templates</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/admin/email-templates/{emailTemplate}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/admin/email-templates/{emailTemplate}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/admin/email-templates/{emailTemplate}/users</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/admin/email-templates/{emailTemplate}/users</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/admin/email-templates/{emailTemplate}/users/{personId}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/admin/info/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/admin/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/admin/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/admin/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/admins</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/admins/active-to-tasks/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/admins/active/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/assign-user-to-work-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/chat/users</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/chat/workstation/{workstationId}/users</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/client</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/client/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/client/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/client/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/companies-contact</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/companies-contact</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/companies-contact</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/contacts</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/contacts-new-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/contacts/active</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/contacts/active-us-booths-connect</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-admins-to-assign-work-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-admins-to-assign/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/note/contact</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/note/contact/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/notes/contact</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/orders/admin</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/orders/contact</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/sms-call/contacts/{number}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/user-profile</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/user/info/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/user/sidebar-width</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/user/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
 
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/admin/admin</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Create administrator</div>
-                </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/admin/contacts</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">List contacts/clients</div>
-                </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/admin/client</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Create contact/client</div>
-                </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/admin/users</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">List all users</div>
-                </div>
             </section>
 
             <section class="section" id="admin-products">
-                <h2>Admin — Products</h2>
+                <h2>Products & Catalog</h2>
+                <div class="endpoint-count">43 endpoints</div>
 
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/admin/store-products</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">List store products</div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/active-colors/{id}</span>
+                    <span class="badge auth">Auth</span>
                 </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/all-custom-products</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/category</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/category/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/category/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/color</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/color/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/color/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/colors</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/custom-product</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/custom-product/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/custom-product/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/custom-product/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/custom-products</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-standard-products</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/manage-materials-categories-assigned</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/material-warehouse-in</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/material-warehouse-out</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/material/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/materials-categories</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/materials-categories-assigned/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/product/image/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/product/images</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/product/images/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/production-calendar</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/production-calendar</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/production-calendar/update-date/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/production-calendar/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/production-calendar/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/save-product-to-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/standard-product</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/standard-product/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/standard-product/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/standard-product/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/standard-products</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/store-product</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/store-product/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/store-product/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/store-product/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/store-products</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/update-category</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/update-image-material</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/update-lead-category</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
 
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/admin/store-product</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Create product</div>
-                </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/admin/custom-products</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Custom products</div>
-                </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/admin/standard-products</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Standard products</div>
-                </div>
             </section>
 
             <section class="section" id="admin-orders">
-                <h2>Admin — Orders</h2>
+                <h2>Orders & Invoices</h2>
+                <div class="endpoint-count">92 endpoints</div>
 
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/admin/orders</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">List all orders</div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/add-standard-temp-order-item</span>
+                    <span class="badge auth">Auth</span>
                 </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/admin/order/{id}</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">View order by ID</div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/add-temp-invoice-item</span>
+                    <span class="badge auth">Auth</span>
                 </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/admin/process-order</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Process new order</div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/add-temp-order-item</span>
+                    <span class="badge auth">Auth</span>
                 </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/admin/send-quote</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Send quote</div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/archived-orders</span>
+                    <span class="badge auth">Auth</span>
                 </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/admin/send-invoice</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Send invoice</div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/assign-factory-to-order</span>
+                    <span class="badge auth">Auth</span>
                 </div>
-            </section>
-
-            <section class="section" id="admin-work-orders">
-                <h2>Admin — Work Orders</h2>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/admin/work-orders</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">List work orders</div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/cancel-temp-order-detail</span>
+                    <span class="badge auth">Auth</span>
                 </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/admin/work-order</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Create work order</div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/change-pool-order-status</span>
+                    <span class="badge auth">Auth</span>
                 </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/admin/take-work-order</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Take work order</div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/confirm-proposal</span>
+                    <span class="badge auth">Auth</span>
                 </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/admin/update-status-work-order</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Update order status</div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/delete-order-file/{id}</span>
+                    <span class="badge auth">Auth</span>
                 </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/delete-proposal</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/delete-temp-invoice-item/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/delete-temp-order-item/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/duplicate-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/edit-temp-invoice-item</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/edit-temp-order-item</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/generate-invoice-pdf/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/generate-order-pdf/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/generate-pdf-quote/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-invoice/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-order-assigned/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-order-files/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-temp-invoice-items</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-temp-order-items</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-work-orders-completed/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/invoice/process-partial-payment</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/invoice/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/invoices</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/manage-assigned-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/order-comment</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/order-comment-file/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/order-comment/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/order-comments/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/order/deadline/{orderId}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/order/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/order/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/order/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/orders</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/orders/active/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/orders/bulk-delete</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/person-work-order/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/pool-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/pool-order/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/pool-order/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/pool-order/{token}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/pool-orders</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/process-invoice</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/process-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/proposals</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/proposals/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/quickbooks/delete-invoice</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/quickbooks/invoices</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/quickbooks/invoices/payments/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/quickbooks/invoices/{id}/sync-payments</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/quickbooks/invoices/{invoiceId}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/quickbooks/invoices/{invoiceId}/send</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/quickbooks/update-invoice-status</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/quote-request/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/quote-request/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/quote-requests</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/remove-invoice-expense/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/save-add-temp-order-item</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/save-order-files</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/save-proposal</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/send-email/{orderId}/{nameFile}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/send-invoice</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/send-invoice-pdf/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/send-invoice-update-design</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/send-order-advance/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/send-pdf-quote/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/send-proposal</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/send-quote</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/take-pool-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/take-work-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/update-assign-pool-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/update-assign-work-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/update-invoice-status</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/update-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/update-order-status</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/update-status-work-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/work-order</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/work-order-note</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/work-order-note/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/work-order-note/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/work-order-notes</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/work-order-team/set-leader</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/work-order-team/{workOrderId}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/work-order/files</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/work-order/files/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/work-order/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/work-order/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/work-order/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/work-orders</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+
             </section>
 
             <section class="section" id="admin-inventory">
-                <h2>Admin — Inventory</h2>
+                <h2>Inventory & Materials</h2>
+                <div class="endpoint-count">24 endpoints</div>
 
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/admin/dynamic-inventory</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Dynamic inventory management</div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/dynamic-inventory</span>
+                    <span class="badge auth">Auth</span>
                 </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/dynamic-inventory</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/dynamic-inventory/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/dynamic-inventory/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/dynamic-inventory/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/expense</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/expense/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/expense/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/expenses</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/fix-expense</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/fix-expense/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/fix-expense/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/fix-expense/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/fix-expenses</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/fix-inventory</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/fix-inventory</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/fix-inventory/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/fix-inventory/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/fix-inventory/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/foam-inventory</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/foam-inventory</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/foam-inventory/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/foam-inventory/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/foam-inventory/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
 
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/admin/foam-inventory</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Foam inventory</div>
-                </div>
+            </section>
 
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/admin/fix-inventory</span>
-                        <span class="badge auth">Auth Required</span>
-                    </div>
-                    <div class="description">Fixed inventory</div>
+            <section class="section" id="admin-communication">
+                <h2>Chat & Notifications</h2>
+                <div class="endpoint-count">34 endpoints</div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/all-notifications</span>
+                    <span class="badge auth">Auth</span>
                 </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/calls/hang-up/{callSid}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/calls/make</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/calls/status/{callSid}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/calls/token</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/chat/get-messages/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/chat/group/{groupId}/messages</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/chat/groups</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/chat/groups</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/chat/groups/{groupId}/members/{personId}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/chat/groups/{groupId}/members/{personId}/role</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/chat/groups/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/chat/groups/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/chat/groups/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/chat/groups/{id}/members</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/chat/groups/{id}/members</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/chat/groups/{id}/toggle-mute</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/chat/message/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/chat/message/{id}/edit</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/chat/send-message</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/chat/workstations-groups</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/ia-chat-async</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/notification/mark-as-read</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/notifications</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/notifications</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/notifications/mark-all-as-read</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/notifications/unread-count</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/notifications/{notification}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/send-notification</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/sms-call/all-messages-number/{number}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/sms-call/available-numbers</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/sms-call/get-new-numbers</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/sms-call/numbers</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/sms-call/send-message</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+
+            </section>
+
+            <section class="section" id="admin-files">
+                <h2>Files & Media</h2>
+                <div class="endpoint-count">24 endpoints</div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/delete-check-in-out-file/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/delete-files</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/delete-general-file/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/file-manager/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/files-manager</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/files-manager</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/gallery</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/gallery</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/gallery/image/{image}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/gallery/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-check-in-out-files/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-files-qirp/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/person/media</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/person/media/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/portfolio/work/file/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/profile</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/save-check-in-out-files</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/save-general-file</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/slider-images</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/slider-images</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/slider-images/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/slider-images/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/slider-images/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/update-profile-img</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+
+            </section>
+
+            <section class="section" id="admin-calendar">
+                <h2>Calendar & Tasks</h2>
+                <div class="endpoint-count">14 endpoints</div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/break-check-in</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/check-in-out/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/finish-check-in</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-check-in</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/new-check-in-out</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/restart-check-in</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/start-check-in</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/task</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/task/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/task/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/task/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/task/{id}/complete</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/tasks</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/update-check-in-out/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+
+            </section>
+
+            <section class="section" id="admin-integrations">
+                <h2>Integrations</h2>
+                <div class="endpoint-count">12 endpoints</div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/integrations</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/integrations/ghl/companies</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/integrations/ghl/company-id</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/quickbooks/auth-url</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/quickbooks/disconnect</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/quickbooks/payments/{paymentId}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/twilio/available-numbers</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/twilio/messages/twilio-number/{number}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/twilio/new-number</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/twilio/numbers</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/twilio/send-message</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/validate-integrations</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+
+            </section>
+
+            <section class="section" id="admin-cms">
+                <h2>CMS & Content</h2>
+                <div class="endpoint-count">25 endpoints</div>
+
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/about-us</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/about-us</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/about-us/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/blog</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/blog/image/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/blog/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/blog/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/blog/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/blogs</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/faq</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/faq/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/faq/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/faqs</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/legal-term</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/legal-term/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/legal-terms</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/portfolio</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/portfolio/work</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/portfolio/work/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/portfolio/work/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/testimonial</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/testimonial/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/testimonial/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/testimonials</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/wikiStore</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+
             </section>
 
             <section class="section" id="admin-other">
-                <h2>Admin — Other Resources</h2>
+                <h2>Other Resources</h2>
+                <div class="endpoint-count">94 endpoints</div>
 
-                <p>Additional admin endpoints include:</p>
-                <ul>
-                    <li><strong>Chat & Notifications:</strong> Real-time messaging, AI chat, push notifications</li>
-                    <li><strong>Files & Media:</strong> File manager, galleries, document management</li>
-                    <li><strong>Calendar & Tasks:</strong> Production calendar, task management</li>
-                    <li><strong>Reports:</strong> Analytics and reporting endpoints</li>
-                    <li><strong>Integrations:</strong> QuickBooks, Twilio, SMS management</li>
-                    <li><strong>CMS:</strong> Blog, testimonials, FAQs, portfolio</li>
-                </ul>
-            </section>
-
-            <section class="section" id="client-endpoints">
-                <h2>Client — Store & Cart</h2>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/client/home</span>
-                        <span class="badge public">Public</span>
-                    </div>
-                    <div class="description">Home data (slider, featured products)</div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/</span>
+                    <span class="badge auth">Auth</span>
                 </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/client/shop</span>
-                        <span class="badge public">Public</span>
-                    </div>
-                    <div class="description">Store products</div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/categories</span>
+                    <span class="badge auth">Auth</span>
                 </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method get">GET</span>
-                        <span class="path">/api/client/cart/{cartId}</span>
-                        <span class="badge public">Public</span>
-                    </div>
-                    <div class="description">View cart</div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/categories/active/{workstationId}/{module}</span>
+                    <span class="badge auth">Auth</span>
                 </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/client/cart/add</span>
-                        <span class="badge public">Public</span>
-                    </div>
-                    <div class="description">Add to cart</div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/check-fb-session</span>
+                    <span class="badge auth">Auth</span>
                 </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/client/quote</span>
-                        <span class="badge public">Public</span>
-                    </div>
-                    <div class="description">Request quote</div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/companies</span>
+                    <span class="badge auth">Auth</span>
                 </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/company</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/company-location</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/company-location/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/company-location/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/company-locations</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/company-numbers</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/company/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/create-bill</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/delete-stage/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/delete-subscription/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/example/send-number</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/folder-manager</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/folder-manager</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/folder-manager/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/folder-manager/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/folder-manager/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/generate-qr/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/generate-receipt-pdf/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-ordes-clock</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-pdf-receipt/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-projects-manager/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-response</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-subscription/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-work-ordes-clock</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/get-worktations-factories</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/lead-categories</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/leads-center</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/logout</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/new-note</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/new-subscription</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/notes</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/pay-plan-subscription</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/pay-worked-hours</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/payment-methods</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/person-documents/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/person-payment/{personPayment}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/plan-subscriptions</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/plans</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/process-manual-payment</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/proxy-texture</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/register-device-token</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/reports/send</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/role</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/role/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/role/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/roles</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/roles/active</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/roles/all-permissions</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/roles/module-permissions</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/roles/permissions</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/save-fb-session</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/save-stage</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/send-receipt</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/sidebar-modules</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/stop-clock</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/terms-acceptance</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/terms-acceptance/check/{personId}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/terms-acceptance/person/{personId}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/transaction</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/transaction/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/transaction/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/transactions</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/update-note/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/update-payment-worked-hours/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/update-proyect-manager-assign</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/update-source</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/update-stage/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/update-subscription/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/update-to-waiting-approval</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/uploads/3d-model</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/vendor</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/vendor-comment</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/vendor-comment/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/vendor-comment/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/vendor/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/vendor/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/vendor/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/vendor/{vendorId}/comments</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/vendors</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/vendors/active/{workstationId}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/workstation</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/workstation/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/workstation/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/workstation/{id}</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/workstations</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/workstations/active</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method delete">delete</span>
+                    <span class="path">/api/{id}/delete</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">get</span>
+                    <span class="path">/api/{id}/show</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method put">put</span>
+                    <span class="path">/api/{id}/update</span>
+                    <span class="badge auth">Auth</span>
+                </div>
+            </div>
+
             </section>
 
             <section class="section" id="webhooks">
-                <h2>Webhooks</h2>
+                <h2>External Integrations</h2>
+                <div class="endpoint-count">4 endpoints</div>
 
-                <div class="info-box">
-                    <p>Webhooks for external service integrations</p>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/ghl/webhook</span>
+                    <span class="badge webhook">Webhook</span>
                 </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/ghl/webhook/opportunity</span>
+                    <span class="badge webhook">Webhook</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/twilio/get-message-received</span>
+                    <span class="badge webhook">Webhook</span>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">post</span>
+                    <span class="path">/api/webhooks/quickbooks/payments</span>
+                    <span class="badge webhook">Webhook</span>
+                </div>
+            </div>
 
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/webhooks/quickbooks/payments</span>
-                        <span class="badge public">Webhook</span>
-                    </div>
-                    <div class="description">QuickBooks — Payment notification</div>
-                </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/twilio/get-message-received</span>
-                        <span class="badge public">Webhook</span>
-                    </div>
-                    <div class="description">Twilio — Messages received</div>
-                </div>
-
-                <div class="endpoint">
-                    <div class="endpoint-header">
-                        <span class="method post">POST</span>
-                        <span class="path">/api/ghl/webhook</span>
-                        <span class="badge public">Webhook</span>
-                    </div>
-                    <div class="description">GoHighLevel — General webhook</div>
-                </div>
             </section>
 
-            <section class="section">
-                <h2>Contact</h2>
 
-                <div class="info-box success">
-                    <h3>Technical Support</h3>
-                    <p><strong>Email:</strong> tech@usbooths.com</p>
-                    <p><strong>Website:</strong> https://usbooths.com</p>
-                    <p><strong>Environment:</strong> Production</p>
-                </div>
-
-                <div class="info-box warning">
-                    <h3>Important Notes</h3>
-                    <ul>
-                        <li>Production API with real data</li>
-                        <li>Keep your tokens secure and never share them</li>
-                        <li>Respect rate limits to ensure service availability</li>
-                        <li>All requests must use HTTPS</li>
-                        <li>Auto-generated documentation</li>
-                    </ul>
-                </div>
-            </section>
         </main>
     </div>
 
     <script>
+        // Mobile menu toggle
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
-        const searchBox = document.getElementById('searchBox');
-        const endpoints = document.querySelectorAll('.endpoint');
-        const navLinks = document.querySelectorAll('.nav-link');
 
-        // Toggle mobile menu
         menuToggle.addEventListener('click', () => {
             sidebar.classList.toggle('open');
             sidebarOverlay.classList.toggle('open');
@@ -1068,43 +4111,69 @@
             sidebarOverlay.classList.remove('open');
         });
 
-        // Close menu when clicking nav link on mobile
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 1024) {
+        // Search functionality
+        const searchBox = document.getElementById('searchBox');
+        const endpoints = document.querySelectorAll('.endpoint');
+
+        searchBox.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            endpoints.forEach((endpoint) => {
+                const path = endpoint.querySelector('.path').textContent.toLowerCase();
+                const method = endpoint.querySelector('.method').textContent.toLowerCase();
+                const shouldShow = path.includes(query) || method.includes(query);
+                endpoint.style.display = shouldShow ? 'block' : 'none';
+            });
+        });
+
+        // Copy to clipboard for paths
+        document.querySelectorAll('.path').forEach((pathEl) => {
+            pathEl.addEventListener('click', function(e) {
+                e.preventDefault();
+                const text = this.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    // Show feedback
+                    const originalBg = this.style.backgroundColor;
+                    this.style.backgroundColor = 'rgba(52, 199, 89, 0.2)';
+                    setTimeout(() => {
+                        this.style.backgroundColor = originalBg;
+                    }, 200);
+                });
+            });
+        });
+
+        // Smooth scrolling for nav links
+        document.querySelectorAll('.nav-link').forEach((link) => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    // Close mobile menu
                     sidebar.classList.remove('open');
                     sidebarOverlay.classList.remove('open');
                 }
             });
         });
 
-        // Search functionality
-        searchBox.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            endpoints.forEach(endpoint => {
-                const text = endpoint.textContent.toLowerCase();
-                const path = endpoint.querySelector('.path')?.textContent.toLowerCase() || '';
-                endpoint.style.display = (searchTerm === '' || text.includes(searchTerm) || path.includes(searchTerm)) ? 'block' : 'none';
-            });
-        });
+        // Highlight nav links based on scroll position
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
 
-        // Click to copy path
-        document.querySelectorAll('.path').forEach(path => {
-            path.addEventListener('click', () => {
-                navigator.clipboard.writeText(path.textContent).then(() => {
-                    const original = path.textContent;
-                    path.textContent = '✓ Copied';
-                    setTimeout(() => path.textContent = original, 1500);
-                });
+            let current = '';
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
             });
-        });
 
-        // Smooth scroll
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.getElementById(link.getAttribute('href').substring(1));
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            navLinks.forEach((link) => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
             });
         });
     </script>
