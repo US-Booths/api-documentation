@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Booths API - Documentación Completa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --bg-color: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text-color: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-secondary);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: calc(100vh - 120px);
+        }
+
+        .sidebar {
+            width: 300px;
+            background: var(--bg-color);
+            padding: 2rem 1rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 120px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-section h3 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            background: var(--bg-secondary);
+            color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            background: var(--bg-color);
+            margin: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 140px;
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            font-size: 1.75rem;
+        }
+
+        .section h3 {
+            color: var(--text-color);
+            margin: 1.5rem 0 1rem;
+            font-size: 1.25rem;
+        }
+
+        .info-box {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .info-box.warning {
+            border-left-color: var(--warning-color);
+            background: #fef3c7;
+        }
+
+        .info-box.success {
+            border-left-color: var(--success-color);
+            background: #d1fae5;
+        }
+
+        .endpoint {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .endpoint:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+        }
+
+        .endpoint-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .method {
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .method.get { background: #dbeafe; color: #1e40af; }
+        .method.post { background: #dcfce7; color: #15803d; }
+        .method.put { background: #fef3c7; color: #a16207; }
+        .method.delete { background: #fee2e2; color: #b91c1c; }
+
+        .path {
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            color: var(--text-color);
+            font-weight: 500;
+            flex: 1;
+            background: var(--code-bg);
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .path:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.auth {
+            background: #fed7aa;
+            color: #9a3412;
+        }
+
+        .badge.public {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge.rate {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .description {
+            color: var(--text-secondary);
+            margin: 0.75rem 0;
+            line-height: 1.5;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+            }
+            .main-content {
+                margin: 1rem;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>🏢 US Booths API</h1>
+        <p>Documentación Completa de la API REST - v1.0</p>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <input type="text" class="search-box" placeholder="Buscar endpoint..." id="searchBox">
+
+            <div class="nav-section">
+                <h3>📋 General</h3>
+                <a href="#overview" class="nav-link">Resumen</a>
+                <a href="#authentication" class="nav-link">Autenticación</a>
+                <a href="#rate-limits" class="nav-link">Rate Limits</a>
+            </div>
+
+            <div class="nav-section">
+                <h3>🌐 Públicos</h3>
+                <a href="#public-endpoints" class="nav-link">Endpoints Públicos</a>
+            </div>
+
+            <div class="nav-section">
+                <h3>🔐 Admin</h3>
+                <a href="#admin-dashboard" class="nav-link">Dashboard</a>
+                <a href="#admin-users" class="nav-link">Usuarios</a>
+                <a href="#admin-products" class="nav-link">Productos</a>
+                <a href="#admin-orders" class="nav-link">Órdenes</a>
+                <a href="#admin-work-orders" class="nav-link">Órdenes de Trabajo</a>
+            </div>
+
+            <div class="nav-section">
+                <h3>🛍️ Cliente</h3>
+                <a href="#client-endpoints" class="nav-link">Tienda & Cart</a>
+            </div>
+
+            <div class="nav-section">
+                <h3>🔗 Webhooks</h3>
+                <a href="#webhooks" class="nav-link">Integraciones</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <section class="section" id="overview">
+                <h2>📋 Resumen General</h2>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">350+</div>
+                        <div class="stat-label">Endpoints</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">REST</div>
+                        <div class="stat-label">Arquitectura</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">JSON</div>
+                        <div class="stat-label">Formato</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">v1</div>
+                        <div class="stat-label">Versión</div>
+                    </div>
+                </div>
+
+                <div class="info-box success">
+                    <h3>🔗 Base URL</h3>
+                    <p><strong>API Base:</strong> <code>https://api.usbooths.com</code></p>
+                    <p><strong>Versión:</strong> <code>/api/v1/...</code></p>
+                </div>
+
+                <h3>Características Principales</h3>
+                <ul style="line-height: 2;">
+                    <li>✅ Autenticación Laravel Sanctum (token-based)</li>
+                    <li>✅ Rate limiting por tipo de endpoint</li>
+                    <li>✅ Versionado de API</li>
+                    <li>✅ Webhooks para integraciones</li>
+                    <li>✅ Sistema de permisos por roles</li>
+                    <li>✅ Integración QuickBooks, Twilio, GoHighLevel</li>
+                    <li>✅ Chat en tiempo real</li>
+                    <li>✅ Gestión completa de producción</li>
+                </ul>
+            </section>
+
+            <section class="section" id="authentication">
+                <h2>🔐 Autenticación</h2>
+
+                <p>La API utiliza <strong>Laravel Sanctum</strong> para autenticación basada en tokens.</p>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/login</span>
+                        <span class="badge public">Público</span>
+                    </div>
+                    <div class="description">Obtener token de autenticación</div>
+
+                    <h4>Request:</h4>
+                    <div class="code-block">
+{
+  "email": "usuario@example.com",
+  "password": "tu_password"
+}
+                    </div>
+
+                    <h4>Response:</h4>
+                    <div class="code-block">
+{
+  "success": true,
+  "token": "1|abcdef123456...",
+  "user": {
+    "id": 1,
+    "name": "Usuario",
+    "email": "usuario@example.com"
+  }
+}
+                    </div>
+                </div>
+
+                <h3>Usar el Token</h3>
+                <div class="code-block">
+Authorization: Bearer 1|abcdef123456...
+                </div>
+            </section>
+
+            <section class="section" id="rate-limits">
+                <h2>⚡ Rate Limits</h2>
+
+                <div class="info-box">
+                    <ul>
+                        <li><strong>Público:</strong> 60 req/min por IP</li>
+                        <li><strong>Auth:</strong> 10 req/min por IP (login/register)</li>
+                        <li><strong>Admin:</strong> 600 req/min por usuario</li>
+                        <li><strong>Cliente:</strong> 120 req/min por IP</li>
+                        <li><strong>Webhooks:</strong> 120 req/min por IP</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="section" id="public-endpoints">
+                <h2>🌐 Endpoints Públicos</h2>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/health</span>
+                        <span class="badge public">Público</span>
+                    </div>
+                    <div class="description">Health check de la API</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/register</span>
+                        <span class="badge public">Público</span>
+                    </div>
+                    <div class="description">Registrar nuevo usuario</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/forgot-password</span>
+                        <span class="badge public">Público</span>
+                    </div>
+                    <div class="description">Solicitar recuperación de contraseña</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/reset-password</span>
+                        <span class="badge public">Público</span>
+                    </div>
+                    <div class="description">Restablecer contraseña</div>
+                </div>
+            </section>
+
+            <section class="section" id="admin-dashboard">
+                <h2>🔐 Admin - Dashboard</h2>
+
+                <div class="info-box warning">
+                    <p><strong>Nota:</strong> Todos los endpoints admin requieren <code>auth:sanctum</code> y tienen rate limit de 600 req/min.</p>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/dashboard</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Datos del dashboard (métricas, estadísticas)</div>
+                </div>
+            </section>
+
+            <section class="section" id="admin-users">
+                <h2>👥 Admin - Usuarios</h2>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/admins</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Listar administradores</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/admin/admin</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Crear administrador</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/contacts</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Listar contactos/clientes</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/admin/client</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Crear contacto/cliente</div>
+                </div>
+            </section>
+
+            <section class="section" id="admin-products">
+                <h2>📦 Admin - Productos</h2>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/store-products</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Listar productos de tienda</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/admin/store-product</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Crear producto</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/custom-products</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Productos personalizados</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/standard-products</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Productos estándar</div>
+                </div>
+            </section>
+
+            <section class="section" id="admin-orders">
+                <h2>📝 Admin - Órdenes</h2>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/orders</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Listar todas las órdenes</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/order/{id}</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Ver orden por ID</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/admin/process-order</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Procesar nueva orden</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/admin/send-quote</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Enviar cotización</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/admin/send-invoice</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Enviar factura</div>
+                </div>
+            </section>
+
+            <section class="section" id="admin-work-orders">
+                <h2>🏭 Admin - Órdenes de Trabajo</h2>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/admin/work-orders</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Listar órdenes de trabajo</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/admin/work-order</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Crear orden de trabajo</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/admin/take-work-order</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Tomar orden de trabajo</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/admin/update-status-work-order</span>
+                        <span class="badge auth">Auth Required</span>
+                    </div>
+                    <div class="description">Actualizar estado de orden</div>
+                </div>
+            </section>
+
+            <section class="section" id="client-endpoints">
+                <h2>🛍️ Cliente - Tienda & Carrito</h2>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/client/home</span>
+                        <span class="badge public">Público</span>
+                    </div>
+                    <div class="description">Datos del home (slider, productos destacados)</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/client/shop</span>
+                        <span class="badge public">Público</span>
+                    </div>
+                    <div class="description">Productos de la tienda</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method get">GET</span>
+                        <span class="path">/api/client/cart/{cartId}</span>
+                        <span class="badge public">Público</span>
+                    </div>
+                    <div class="description">Ver carrito</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/client/cart/add</span>
+                        <span class="badge public">Público</span>
+                    </div>
+                    <div class="description">Agregar al carrito</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/client/quote</span>
+                        <span class="badge public">Público</span>
+                    </div>
+                    <div class="description">Solicitar cotización</div>
+                </div>
+            </section>
+
+            <section class="section" id="webhooks">
+                <h2>🔗 Webhooks</h2>
+
+                <div class="info-box">
+                    <p>Webhooks para integraciones con servicios externos</p>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/webhooks/quickbooks/payments</span>
+                        <span class="badge public">Webhook</span>
+                    </div>
+                    <div class="description">QuickBooks - Notificación de pagos</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/twilio/get-message-received</span>
+                        <span class="badge public">Webhook</span>
+                    </div>
+                    <div class="description">Twilio - Mensajes recibidos</div>
+                </div>
+
+                <div class="endpoint">
+                    <div class="endpoint-header">
+                        <span class="method post">POST</span>
+                        <span class="path">/api/ghl/webhook</span>
+                        <span class="badge public">Webhook</span>
+                    </div>
+                    <div class="description">GoHighLevel - Webhook general</div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2>📚 Contacto</h2>
+
+                <div class="info-box success">
+                    <h3>Soporte Técnico</h3>
+                    <p>📧 <strong>mayo@usbooths.com</strong></p>
+                    <p>🌐 <strong>https://usbooths.com</strong></p>
+                    <p>💼 <strong>Ambiente: Producción</strong></p>
+                </div>
+
+                <div class="info-box warning">
+                    <h3>⚠️ Notas Importantes</h3>
+                    <ul>
+                        <li>API en producción con datos reales</li>
+                        <li>Mantén tus tokens seguros</li>
+                        <li>Respeta los rate limits</li>
+                        <li>Documentación generada automáticamente</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Search functionality
+        const searchBox = document.getElementById('searchBox');
+        const endpoints = document.querySelectorAll('.endpoint');
+
+        searchBox.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+
+            endpoints.forEach(endpoint => {
+                const text = endpoint.textContent.toLowerCase();
+                const path = endpoint.querySelector('.path')?.textContent.toLowerCase() || '';
+
+                if (searchTerm === '' || text.includes(searchTerm) || path.includes(searchTerm)) {
+                    endpoint.style.display = 'block';
+                } else {
+                    endpoint.style.display = 'none';
+                }
+            });
+        });
+
+        // Click to copy path
+        document.querySelectorAll('.path').forEach(path => {
+            path.addEventListener('click', () => {
+                const text = path.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = path.textContent;
+                    path.style.color = 'white';
+                    path.textContent = '✓ Copiado!';
+                    setTimeout(() => {
+                        path.textContent = originalText;
+                        path.style.color = '';
+                    }, 1500);
+                });
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
