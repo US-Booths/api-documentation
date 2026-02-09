@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>US Booths API - Complete Documentation</title>
+    <title>US Booths API - Documentation</title>
     <style>
         * {
             margin: 0;
@@ -12,348 +12,450 @@
         }
 
         :root {
-            --primary-color: #4f8fff;
-            --secondary-color: #3b7ce0;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --purple-color: #9333ea;
-            --bg-color: #0f1117;
-            --bg-secondary: #1a1d29;
-            --bg-tertiary: #232736;
-            --text-color: #e5e7eb;
-            --text-secondary: #9ca3af;
-            --border-color: #2d3142;
-            --code-bg: #1e293b;
-            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.3);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
+            --primary: #007AFF;
+            --primary-dark: #0051D5;
+            --success: #34C759;
+            --warning: #FF9500;
+            --danger: #FF3B30;
+            --purple: #AF52DE;
+
+            --bg-primary: #000000;
+            --bg-secondary: #1C1C1E;
+            --bg-tertiary: #2C2C2E;
+            --bg-elevated: #3A3A3C;
+
+            --text-primary: #FFFFFF;
+            --text-secondary: #98989D;
+            --text-tertiary: #636366;
+
+            --separator: rgba(255, 255, 255, 0.08);
+            --overlay: rgba(0, 0, 0, 0.3);
+
+            --blur: blur(20px);
+            --radius-small: 10px;
+            --radius-medium: 16px;
+            --radius-large: 20px;
+        }
+
+        @supports (backdrop-filter: blur(20px)) {
+            .glass {
+                background: rgba(28, 28, 30, 0.72);
+                backdrop-filter: saturate(180%) blur(20px);
+            }
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background: var(--bg-color);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+            line-height: 1.5;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 2rem;
-            box-shadow: var(--shadow-lg);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 0.5px solid var(--separator);
+            padding: 20px 0;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
         }
 
         .header h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
         }
 
         .header p {
-            opacity: 0.9;
-            font-size: 1.1rem;
+            font-size: 15px;
+            color: var(--text-secondary);
+            font-weight: 400;
         }
 
         .container {
-            display: flex;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            min-height: calc(100vh - 120px);
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 60px;
         }
 
         .sidebar {
-            width: 300px;
-            background: var(--bg-secondary);
-            padding: 2rem 1rem;
-            box-shadow: var(--shadow);
             position: sticky;
             top: 120px;
-            height: calc(100vh - 120px);
-            overflow-y: auto;
+            height: fit-content;
         }
 
         .search-box {
             width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s;
-            background: var(--bg-tertiary);
-            color: var(--text-color);
+            padding: 10px 16px;
+            background: var(--bg-secondary);
+            border: 0.5px solid var(--separator);
+            border-radius: var(--radius-small);
+            font-size: 15px;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            transition: all 0.2s ease;
         }
 
         .search-box:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(79, 143, 255, 0.2);
+            background: var(--bg-tertiary);
+            border-color: var(--primary);
+        }
+
+        .search-box::placeholder {
+            color: var(--text-tertiary);
         }
 
         .nav-section {
-            margin-bottom: 1.5rem;
+            margin-bottom: 28px;
         }
 
         .nav-section h3 {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-bottom: 0.75rem;
+            font-size: 11px;
             font-weight: 600;
-            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-bottom: 10px;
+            letter-spacing: 0.6px;
         }
 
         .nav-link {
             display: block;
-            padding: 0.5rem 0.75rem;
-            color: var(--text-color);
+            padding: 8px 12px;
+            color: var(--text-secondary);
             text-decoration: none;
             border-radius: 6px;
-            font-size: 0.9rem;
-            margin-bottom: 0.25rem;
-            transition: all 0.2s;
+            font-size: 14px;
+            margin-bottom: 2px;
+            transition: all 0.15s ease;
+            font-weight: 400;
         }
 
         .nav-link:hover {
-            background: var(--bg-tertiary);
-            color: var(--primary-color);
-            transform: translateX(5px);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
         }
 
         .main-content {
-            flex: 1;
-            padding: 2rem;
-            background: var(--bg-secondary);
-            margin: 2rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
+            min-width: 0;
         }
 
         .section {
-            margin-bottom: 3rem;
-            scroll-margin-top: 140px;
+            margin-bottom: 64px;
         }
 
         .section h2 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--border-color);
-            font-size: 1.75rem;
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -0.8px;
+            margin-bottom: 24px;
+            color: var(--text-primary);
         }
 
         .section h3 {
-            color: var(--text-color);
-            margin: 1.5rem 0 1rem;
-            font-size: 1.25rem;
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.4px;
+            margin: 32px 0 16px;
+            color: var(--text-primary);
+        }
+
+        .section p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin: 16px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            padding: 32px 24px;
+            border-radius: var(--radius-medium);
+            text-align: center;
+            border: 0.5px solid var(--separator);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 600;
+            letter-spacing: -1.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
         }
 
         .info-box {
-            background: var(--bg-tertiary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .info-box.warning {
-            border-left-color: var(--warning-color);
-            background: rgba(245, 158, 11, 0.1);
+            background: var(--bg-secondary);
+            border: 0.5px solid var(--separator);
+            border-radius: var(--radius-medium);
+            padding: 24px;
+            margin: 24px 0;
         }
 
         .info-box.success {
-            border-left-color: var(--success-color);
-            background: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid var(--success);
+        }
+
+        .info-box.warning {
+            border-left: 3px solid var(--warning);
+        }
+
+        .info-box h3 {
+            font-size: 17px;
+            margin-top: 0;
+            margin-bottom: 12px;
         }
 
         .endpoint {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s;
+            background: var(--bg-secondary);
+            border: 0.5px solid var(--separator);
+            border-radius: var(--radius-medium);
+            padding: 24px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
         }
 
         .endpoint:hover {
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary-color);
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
         }
 
         .endpoint-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 12px;
+            margin-bottom: 16px;
             flex-wrap: wrap;
         }
 
         .method {
-            padding: 0.4rem 0.8rem;
+            padding: 6px 12px;
             border-radius: 6px;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .method.get { background: #2563eb; color: white; }
-        .method.post { background: #10b981; color: white; }
-        .method.put { background: #f59e0b; color: white; }
-        .method.delete { background: #ef4444; color: white; }
+        .method.get {
+            background: rgba(0, 122, 255, 0.15);
+            color: var(--primary);
+        }
+
+        .method.post {
+            background: rgba(52, 199, 89, 0.15);
+            color: var(--success);
+        }
+
+        .method.put {
+            background: rgba(255, 149, 0, 0.15);
+            color: var(--warning);
+        }
+
+        .method.delete {
+            background: rgba(255, 59, 48, 0.15);
+            color: var(--danger);
+        }
 
         .path {
-            font-family: 'Courier New', monospace;
-            font-size: 1rem;
-            color: var(--text-color);
+            font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
             font-weight: 500;
+            color: var(--text-primary);
             flex: 1;
-            background: var(--code-bg);
-            padding: 0.4rem 0.8rem;
+            background: var(--bg-tertiary);
+            padding: 8px 12px;
             border-radius: 6px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
         .path:hover {
-            background: var(--primary-color);
-            color: white;
+            background: var(--bg-elevated);
         }
 
         .badge {
-            padding: 0.25rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
+            letter-spacing: 0.4px;
         }
 
         .badge.auth {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning-color);
+            background: rgba(255, 149, 0, 0.15);
+            color: var(--warning);
         }
 
         .badge.public {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success-color);
-        }
-
-        .badge.rate {
-            background: rgba(79, 143, 255, 0.2);
-            color: var(--primary-color);
+            background: rgba(52, 199, 89, 0.15);
+            color: var(--success);
         }
 
         .description {
+            font-size: 15px;
             color: var(--text-secondary);
-            margin: 0.75rem 0;
             line-height: 1.5;
         }
 
         .code-block {
-            background: var(--code-bg);
-            color: #e2e8f0;
-            padding: 1rem;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
+            background: var(--bg-primary);
+            border: 0.5px solid var(--separator);
+            border-radius: var(--radius-small);
+            padding: 20px;
+            font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-secondary);
             overflow-x: auto;
-            margin: 1rem 0;
-            border: 1px solid var(--border-color);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            opacity: 0.9;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                position: static;
-                height: auto;
-            }
-            .main-content {
-                margin: 1rem;
-            }
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        ul {
-            margin-left: 1.5rem;
-        }
-
-        li {
-            margin: 0.5rem 0;
+            margin: 16px 0;
         }
 
         code {
-            background: var(--code-bg);
-            padding: 0.2rem 0.4rem;
+            font-family: 'SF Mono', 'Monaco', 'Menlo', monospace;
+            font-size: 13px;
+            background: var(--bg-tertiary);
+            padding: 2px 6px;
             border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
         h4 {
-            color: var(--text-color);
-            margin: 1rem 0 0.5rem;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 20px 0 12px;
+        }
+
+        ul {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        li {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin: 8px 0;
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                padding: 24px;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .header-content {
+                padding: 0 24px;
+            }
+        }
+
+        .emoji {
+            font-style: normal;
+            margin-right: 8px;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection */
+        ::selection {
+            background: rgba(0, 122, 255, 0.3);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            border: 2px solid var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--bg-elevated);
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <h1>🏢 US Booths API</h1>
-        <p>Complete REST API Documentation - v1.0</p>
+        <div class="header-content">
+            <h1><span class="emoji">🏢</span>US Booths API</h1>
+            <p>Complete REST API Documentation — v1.0</p>
+        </div>
     </header>
 
     <div class="container">
         <aside class="sidebar">
-            <input type="text" class="search-box" placeholder="Search endpoint..." id="searchBox">
+            <input type="text" class="search-box" placeholder="Search endpoints..." id="searchBox">
 
             <div class="nav-section">
-                <h3>📋 General</h3>
+                <h3>General</h3>
                 <a href="#overview" class="nav-link">Overview</a>
                 <a href="#authentication" class="nav-link">Authentication</a>
                 <a href="#rate-limits" class="nav-link">Rate Limits</a>
             </div>
 
             <div class="nav-section">
-                <h3>🌐 Public</h3>
+                <h3>Public</h3>
                 <a href="#public-endpoints" class="nav-link">Public Endpoints</a>
             </div>
 
             <div class="nav-section">
-                <h3>🔐 Admin</h3>
+                <h3>Admin</h3>
                 <a href="#admin-dashboard" class="nav-link">Dashboard</a>
                 <a href="#admin-users" class="nav-link">Users</a>
                 <a href="#admin-products" class="nav-link">Products</a>
@@ -362,19 +464,19 @@
             </div>
 
             <div class="nav-section">
-                <h3>🛍️ Client</h3>
+                <h3>Client</h3>
                 <a href="#client-endpoints" class="nav-link">Store & Cart</a>
             </div>
 
             <div class="nav-section">
-                <h3>🔗 Webhooks</h3>
+                <h3>Webhooks</h3>
                 <a href="#webhooks" class="nav-link">Integrations</a>
             </div>
         </aside>
 
         <main class="main-content">
             <section class="section" id="overview">
-                <h2>📋 General Overview</h2>
+                <h2>Overview</h2>
 
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -396,26 +498,26 @@
                 </div>
 
                 <div class="info-box success">
-                    <h3>🔗 Base URL</h3>
+                    <h3>Base URL</h3>
                     <p><strong>API Base:</strong> <code>https://api.usbooths.com</code></p>
                     <p><strong>Version:</strong> <code>/api/v1/...</code></p>
                 </div>
 
                 <h3>Key Features</h3>
-                <ul style="line-height: 2;">
-                    <li>✅ Laravel Sanctum Authentication (token-based)</li>
-                    <li>✅ Rate limiting by endpoint type</li>
-                    <li>✅ API Versioning</li>
-                    <li>✅ Webhooks for integrations</li>
-                    <li>✅ Role-based permissions system</li>
-                    <li>✅ QuickBooks, Twilio, GoHighLevel Integration</li>
-                    <li>✅ Real-time chat</li>
-                    <li>✅ Complete production management</li>
+                <ul>
+                    <li>Laravel Sanctum Authentication (token-based)</li>
+                    <li>Rate limiting by endpoint type</li>
+                    <li>API Versioning</li>
+                    <li>Webhooks for integrations</li>
+                    <li>Role-based permissions system</li>
+                    <li>QuickBooks, Twilio, GoHighLevel Integration</li>
+                    <li>Real-time chat</li>
+                    <li>Complete production management</li>
                 </ul>
             </section>
 
             <section class="section" id="authentication">
-                <h2>🔐 Authentication</h2>
+                <h2>Authentication</h2>
 
                 <p>The API uses <strong>Laravel Sanctum</strong> for token-based authentication.</p>
 
@@ -427,17 +529,14 @@
                     </div>
                     <div class="description">Get authentication token</div>
 
-                    <h4>Request:</h4>
-                    <div class="code-block">
-{
+                    <h4>Request</h4>
+                    <div class="code-block">{
   "email": "user@example.com",
   "password": "your_password"
-}
-                    </div>
+}</div>
 
-                    <h4>Response:</h4>
-                    <div class="code-block">
-{
+                    <h4>Response</h4>
+                    <div class="code-block">{
   "success": true,
   "token": "1|abcdef123456...",
   "user": {
@@ -445,18 +544,15 @@
     "name": "User",
     "email": "user@example.com"
   }
-}
-                    </div>
+}</div>
                 </div>
 
                 <h3>Using the Token</h3>
-                <div class="code-block">
-Authorization: Bearer 1|abcdef123456...
-                </div>
+                <div class="code-block">Authorization: Bearer 1|abcdef123456...</div>
             </section>
 
             <section class="section" id="rate-limits">
-                <h2>⚡ Rate Limits</h2>
+                <h2>Rate Limits</h2>
 
                 <div class="info-box">
                     <ul>
@@ -470,7 +566,7 @@ Authorization: Bearer 1|abcdef123456...
             </section>
 
             <section class="section" id="public-endpoints">
-                <h2>🌐 Public Endpoints</h2>
+                <h2>Public Endpoints</h2>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
@@ -510,7 +606,7 @@ Authorization: Bearer 1|abcdef123456...
             </section>
 
             <section class="section" id="admin-dashboard">
-                <h2>🔐 Admin - Dashboard</h2>
+                <h2>Admin — Dashboard</h2>
 
                 <div class="info-box warning">
                     <p><strong>Note:</strong> All admin endpoints require <code>auth:sanctum</code> and have a rate limit of 600 req/min.</p>
@@ -527,7 +623,7 @@ Authorization: Bearer 1|abcdef123456...
             </section>
 
             <section class="section" id="admin-users">
-                <h2>👥 Admin - Users</h2>
+                <h2>Admin — Users</h2>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
@@ -567,7 +663,7 @@ Authorization: Bearer 1|abcdef123456...
             </section>
 
             <section class="section" id="admin-products">
-                <h2>📦 Admin - Products</h2>
+                <h2>Admin — Products</h2>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
@@ -607,7 +703,7 @@ Authorization: Bearer 1|abcdef123456...
             </section>
 
             <section class="section" id="admin-orders">
-                <h2>📝 Admin - Orders</h2>
+                <h2>Admin — Orders</h2>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
@@ -656,7 +752,7 @@ Authorization: Bearer 1|abcdef123456...
             </section>
 
             <section class="section" id="admin-work-orders">
-                <h2>🏭 Admin - Work Orders</h2>
+                <h2>Admin — Work Orders</h2>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
@@ -696,7 +792,7 @@ Authorization: Bearer 1|abcdef123456...
             </section>
 
             <section class="section" id="client-endpoints">
-                <h2>🛍️ Client - Store & Cart</h2>
+                <h2>Client — Store & Cart</h2>
 
                 <div class="endpoint">
                     <div class="endpoint-header">
@@ -745,7 +841,7 @@ Authorization: Bearer 1|abcdef123456...
             </section>
 
             <section class="section" id="webhooks">
-                <h2>🔗 Webhooks</h2>
+                <h2>Webhooks</h2>
 
                 <div class="info-box">
                     <p>Webhooks for external service integrations</p>
@@ -757,7 +853,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/webhooks/quickbooks/payments</span>
                         <span class="badge public">Webhook</span>
                     </div>
-                    <div class="description">QuickBooks - Payment notification</div>
+                    <div class="description">QuickBooks — Payment notification</div>
                 </div>
 
                 <div class="endpoint">
@@ -766,7 +862,7 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/twilio/get-message-received</span>
                         <span class="badge public">Webhook</span>
                     </div>
-                    <div class="description">Twilio - Messages received</div>
+                    <div class="description">Twilio — Messages received</div>
                 </div>
 
                 <div class="endpoint">
@@ -775,22 +871,22 @@ Authorization: Bearer 1|abcdef123456...
                         <span class="path">/api/ghl/webhook</span>
                         <span class="badge public">Webhook</span>
                     </div>
-                    <div class="description">GoHighLevel - General webhook</div>
+                    <div class="description">GoHighLevel — General webhook</div>
                 </div>
             </section>
 
             <section class="section">
-                <h2>📚 Contact</h2>
+                <h2>Contact</h2>
 
                 <div class="info-box success">
                     <h3>Technical Support</h3>
-                    <p>📧 <strong>mayo@usbooths.com</strong></p>
-                    <p>🌐 <strong>https://usbooths.com</strong></p>
-                    <p>💼 <strong>Environment: Production</strong></p>
+                    <p><strong>Email:</strong> mayo@usbooths.com</p>
+                    <p><strong>Website:</strong> https://usbooths.com</p>
+                    <p><strong>Environment:</strong> Production</p>
                 </div>
 
                 <div class="info-box warning">
-                    <h3>⚠️ Important Notes</h3>
+                    <h3>Important Notes</h3>
                     <ul>
                         <li>Production API with real data</li>
                         <li>Keep your tokens secure</li>
@@ -803,50 +899,33 @@ Authorization: Bearer 1|abcdef123456...
     </div>
 
     <script>
-        // Search functionality
         const searchBox = document.getElementById('searchBox');
         const endpoints = document.querySelectorAll('.endpoint');
 
         searchBox.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
-
             endpoints.forEach(endpoint => {
                 const text = endpoint.textContent.toLowerCase();
                 const path = endpoint.querySelector('.path')?.textContent.toLowerCase() || '';
-
-                if (searchTerm === '' || text.includes(searchTerm) || path.includes(searchTerm)) {
-                    endpoint.style.display = 'block';
-                } else {
-                    endpoint.style.display = 'none';
-                }
+                endpoint.style.display = (searchTerm === '' || text.includes(searchTerm) || path.includes(searchTerm)) ? 'block' : 'none';
             });
         });
 
-        // Click to copy path
         document.querySelectorAll('.path').forEach(path => {
             path.addEventListener('click', () => {
-                const text = path.textContent;
-                navigator.clipboard.writeText(text).then(() => {
-                    const originalText = path.textContent;
-                    path.style.color = 'white';
-                    path.textContent = '✓ Copied!';
-                    setTimeout(() => {
-                        path.textContent = originalText;
-                        path.style.color = '';
-                    }, 1500);
+                navigator.clipboard.writeText(path.textContent).then(() => {
+                    const original = path.textContent;
+                    path.textContent = '✓ Copied';
+                    setTimeout(() => path.textContent = original, 1500);
                 });
             });
         });
 
-        // Smooth scroll
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const targetId = link.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
+                const target = document.getElementById(link.getAttribute('href').substring(1));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
             });
         });
     </script>
