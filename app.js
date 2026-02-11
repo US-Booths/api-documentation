@@ -3,6 +3,9 @@
  * Requiere: routes.js (API_ROUTES) cargado antes
  */
 
+// Versión de la documentación (cambiar aquí para actualizar en toda la página)
+var API_DOC_VERSION = '1.1';
+
 // Grupos para "Accesos rápidos": se inserta un ancla (h3) al encontrar la primera ruta que coincida.
 // Orden importante: rutas más específicas primero (p. ej. work-order antes de order).
 var quickLinkGroups = [
@@ -121,6 +124,15 @@ function renderRoutes() {
 }
 
 renderRoutes();
+
+// Actualizar versión de la doc en header y stat
+(function () {
+    var v = typeof API_DOC_VERSION !== 'undefined' ? API_DOC_VERSION : '1.1';
+    var h = document.getElementById('doc-version-header');
+    if (h) h.textContent = 'Complete REST API Documentation — v' + v;
+    var s = document.getElementById('stat-doc-version');
+    if (s) s.textContent = 'v' + v;
+})();
 
 // Mobile menu toggle
 const menuToggle = document.getElementById('menuToggle');
