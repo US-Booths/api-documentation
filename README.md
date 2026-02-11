@@ -6,7 +6,7 @@ Documentación completa de la API REST de US Booths.
 La documentación está disponible en: **https://doc.usbooths.com**
 
 ## 📋 Contenido
-- **350+ endpoints** documentados
+- **Rutas en `routes.js`**: todas las rutas están definidas en un único archivo tipo “base de datos” (`routes.js`). Al modificar ese archivo, la documentación en `index.html` se actualiza automáticamente.
 - Autenticación con Laravel Sanctum
 - Rate limits por tipo de endpoint
 - Ejemplos de uso y respuestas
