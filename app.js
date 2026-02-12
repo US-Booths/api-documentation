@@ -4,7 +4,7 @@
  */
 
 // Versión de la documentación (cambiar aquí para actualizar en toda la página)
-var API_DOC_VERSION = '1.2';
+var API_DOC_VERSION = '1.3';
 
 // Grupos para "Accesos rápidos": se inserta un ancla (h3) al encontrar la primera ruta que coincida.
 // Orden importante: rutas más específicas primero (p. ej. work-order antes de order).
@@ -127,7 +127,7 @@ renderRoutes();
 
 // Actualizar versión de la doc en header y stat
 (function () {
-    var v = typeof API_DOC_VERSION !== 'undefined' ? API_DOC_VERSION : '1.2';
+    var v = typeof API_DOC_VERSION !== 'undefined' ? API_DOC_VERSION : '1.3';
     var h = document.getElementById('doc-version-header');
     if (h) h.textContent = 'Complete REST API Documentation — v' + v;
     var s = document.getElementById('stat-doc-version');
